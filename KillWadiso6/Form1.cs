@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace KillWadiso6
 {
@@ -122,6 +123,32 @@ namespace KillWadiso6
 			MakeWindowFlash flashform = new MakeWindowFlash(windowTitlesAndHandles);
 			flashform.ShowDialog(this);
 			flashform.Dispose();
+		}
+
+		private static string[] GetLatestWadisoDllpaths()
+		{
+			string basedir = @"C:\devKiln\build_albion\tundra-output";
+			var Wadiso6dllFiles = Directory.GetDirectories(basedir)
+				.Select(d => Path.Combine(d, "Wadiso6.dll"))
+				.Where(f => File.Exists(f))
+				.ToArray();
+			//var Wadiso6dllFiles = Directory.GetFiles(basedir, "Wadiso6.dll", SearchOption.AllDirectories);
+			var newestDllPaths = Wadiso6dllFiles.Where(f1 => new FileInfo(f1).LastWriteTime.Ticks == Wadiso6dllFiles.Max(f => new FileInfo(f).LastWriteTime.Ticks)).ToArray();
+			return newestDllPaths;
+		}
+
+		private void gotoLastBuildtWadiso6dllToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var newestDllPaths = GetLatestWadisoDllpaths();
+			if (newestDllPaths.Length > 1)
+			{
+				UserMessages.ShowWarningMessage("Found multiple newest Dll paths");//Should never happen
+				return;
+			}
+			else
+			{
+				Process.Start("explorer", "/select,\"" + newestDllPaths[0] + "\"");
+			}
 		}
 	}
 }
