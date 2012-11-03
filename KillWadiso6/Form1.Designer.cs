@@ -64,7 +64,7 @@
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(213, 104);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(213, 82);
 			// 
 			// makeAWindowflashToolStripMenuItem
 			// 
