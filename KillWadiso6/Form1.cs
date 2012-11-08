@@ -13,9 +13,12 @@ namespace KillWadiso6
 {
 	public partial class Form1 : Form
 	{
+		double origOpacity;
+
 		public Form1()
 		{
 			InitializeComponent();
+			origOpacity = this.Opacity;
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -149,6 +152,16 @@ namespace KillWadiso6
 			{
 				Process.Start("explorer", "/select,\"" + newestDllPaths[0] + "\"");
 			}
+		}
+
+		private void button1_MouseEnter(object sender, EventArgs e)
+		{
+			this.Opacity = 1;
+		}
+
+		private void button1_MouseLeave(object sender, EventArgs e)
+		{
+			this.Opacity = origOpacity;
 		}
 	}
 }

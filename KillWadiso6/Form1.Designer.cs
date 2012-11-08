@@ -44,6 +44,7 @@
 			// 
 			this.button1.AutoSize = true;
 			this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.button1.BackColor = System.Drawing.Color.Transparent;
 			this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.button1.Location = new System.Drawing.Point(0, 0);
 			this.button1.Margin = new System.Windows.Forms.Padding(0);
@@ -51,8 +52,10 @@
 			this.button1.Size = new System.Drawing.Size(29, 22);
 			this.button1.TabIndex = 0;
 			this.button1.Text = "W6";
-			this.button1.UseVisualStyleBackColor = true;
+			this.button1.UseVisualStyleBackColor = false;
 			this.button1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button1_MouseDown);
+			this.button1.MouseEnter += new System.EventHandler(this.button1_MouseEnter);
+			this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
 			this.button1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button1_MouseUp);
 			// 
 			// contextMenuStrip1
@@ -112,8 +115,10 @@
 			this.BackColor = System.Drawing.Color.DarkRed;
 			this.ClientSize = new System.Drawing.Size(238, 126);
 			this.Controls.Add(this.button1);
+			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "Form1";
+			this.Opacity = 0.3D;
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
