@@ -8,11 +8,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using SharedClasses;
 
 namespace KillWadiso6
 {
 	public partial class Form1 : Form
 	{
+		private const string cDefaultProcessName = "Wadiso6";
+		private readonly string cPathToProcessName = SettingsInterop.GetFullFilePathInLocalAppdata("ProcessName.fjset", "KillWadiso6");
 		double origOpacity;
 
 		public Form1()
@@ -26,6 +29,26 @@ namespace KillWadiso6
 			int bot = Screen.PrimaryScreen.WorkingArea.Bottom;
 			int right = Screen.PrimaryScreen.WorkingArea.Right;
 			this.Location = new Point(right - this.Width, bot - this.Height);
+		}
+
+		private string processNameToKill
+		{
+			get
+			{
+				if (!File.Exists(cPathToProcessName))
+					return cDefaultProcessName;
+				
+				string fileContents = File.ReadAllText(cPathToProcessName);
+				if (string.IsNullOrWhiteSpace(fileContents))
+					return cDefaultProcessName;
+				else
+					return fileContents;
+			}
+			set
+			{
+				try { File.WriteAllText(cPathToProcessName, value); }
+				catch (Exception exc) { UserMessages.ShowErrorMessage("Unable to set process name to '" + value + "': " + exc.Message); }
+			}
 		}
 
 		protected override bool ShowWithoutActivation
@@ -72,7 +95,7 @@ namespace KillWadiso6
 			{
 				try
 				{
-					if (processes[i].ProcessName.Equals("Wadiso6", StringComparison.InvariantCultureIgnoreCase))
+					if (processes[i].ProcessName.Equals(processNameToKill, StringComparison.InvariantCultureIgnoreCase))
 						processes[i].Kill();
 				}
 				catch { }
@@ -162,6 +185,20 @@ namespace KillWadiso6
 		private void button1_MouseLeave(object sender, EventArgs e)
 		{
 			this.Opacity = origOpacity;
+		}
+
+
+		private void ChangeProcessNameTokill()
+		{
+			string processName = DialogBoxStuff.InputDialog("Please enter the processname to be killed", "Process name to kill");
+			if (string.IsNullOrWhiteSpace(processName))
+				return;
+			processNameToKill = processName;
+		}
+
+		private void changeProcessNameToKillToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ChangeProcessNameTokill();
 		}
 	}
 }

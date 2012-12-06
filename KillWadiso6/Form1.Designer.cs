@@ -37,6 +37,8 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.changeProcessNameToKillToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -64,39 +66,41 @@
             this.makeAWindowflashToolStripMenuItem,
             this.toolStripSeparator1,
             this.gotoLastBuildtWadiso6dllToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.changeProcessNameToKillToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(213, 82);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(224, 132);
 			// 
 			// makeAWindowflashToolStripMenuItem
 			// 
 			this.makeAWindowflashToolStripMenuItem.Name = "makeAWindowflashToolStripMenuItem";
-			this.makeAWindowflashToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.makeAWindowflashToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
 			this.makeAWindowflashToolStripMenuItem.Text = "Make a window &flash";
 			this.makeAWindowflashToolStripMenuItem.Click += new System.EventHandler(this.makeAWindowflashToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(209, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
 			// 
 			// gotoLastBuildtWadiso6dllToolStripMenuItem
 			// 
 			this.gotoLastBuildtWadiso6dllToolStripMenuItem.Name = "gotoLastBuildtWadiso6dllToolStripMenuItem";
-			this.gotoLastBuildtWadiso6dllToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.gotoLastBuildtWadiso6dllToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
 			this.gotoLastBuildtWadiso6dllToolStripMenuItem.Text = "Goto last built &Wadiso6.dll";
 			this.gotoLastBuildtWadiso6dllToolStripMenuItem.Click += new System.EventHandler(this.gotoLastBuildtWadiso6dllToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(209, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(220, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
 			this.exitToolStripMenuItem.Text = "E&xit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -105,6 +109,18 @@
 			this.timer1.Enabled = true;
 			this.timer1.Interval = 5000;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			// 
+			// changeProcessNameToKillToolStripMenuItem
+			// 
+			this.changeProcessNameToKillToolStripMenuItem.Name = "changeProcessNameToKillToolStripMenuItem";
+			this.changeProcessNameToKillToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+			this.changeProcessNameToKillToolStripMenuItem.Text = "C&hange process name to kill";
+			this.changeProcessNameToKillToolStripMenuItem.Click += new System.EventHandler(this.changeProcessNameToKillToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(220, 6);
 			// 
 			// Form1
 			// 
@@ -142,6 +158,8 @@
 		private System.Windows.Forms.ToolStripMenuItem makeAWindowflashToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem gotoLastBuildtWadiso6dllToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem changeProcessNameToKillToolStripMenuItem;
 	}
 }
 
