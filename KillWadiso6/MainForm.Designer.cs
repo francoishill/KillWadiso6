@@ -1,6 +1,6 @@
 ﻿namespace KillWadiso6
 {
-	partial class Form1
+	partial class MainForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -34,11 +34,14 @@
 			this.makeAWindowflashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.gotoLastBuildtWadiso6dllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deleteAlbionCACHEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.changeProcessNameToKillToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
-			this.changeProcessNameToKillToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -66,12 +69,15 @@
             this.makeAWindowflashToolStripMenuItem,
             this.toolStripSeparator1,
             this.gotoLastBuildtWadiso6dllToolStripMenuItem,
+            this.deleteAlbionCACHEToolStripMenuItem,
             this.toolStripSeparator3,
             this.changeProcessNameToKillToolStripMenuItem,
             this.toolStripSeparator2,
+            this.aboutToolStripMenuItem,
+            this.toolStripSeparator4,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(224, 132);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(224, 182);
 			// 
 			// makeAWindowflashToolStripMenuItem
 			// 
@@ -92,6 +98,25 @@
 			this.gotoLastBuildtWadiso6dllToolStripMenuItem.Text = "Goto last built &Wadiso6.dll";
 			this.gotoLastBuildtWadiso6dllToolStripMenuItem.Click += new System.EventHandler(this.gotoLastBuildtWadiso6dllToolStripMenuItem_Click);
 			// 
+			// deleteAlbionCACHEToolStripMenuItem
+			// 
+			this.deleteAlbionCACHEToolStripMenuItem.Name = "deleteAlbionCACHEToolStripMenuItem";
+			this.deleteAlbionCACHEToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+			this.deleteAlbionCACHEToolStripMenuItem.Text = "Delete &Albion CACHE";
+			this.deleteAlbionCACHEToolStripMenuItem.Click += new System.EventHandler(this.deleteAlbionCACHEToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(220, 6);
+			// 
+			// changeProcessNameToKillToolStripMenuItem
+			// 
+			this.changeProcessNameToKillToolStripMenuItem.Name = "changeProcessNameToKillToolStripMenuItem";
+			this.changeProcessNameToKillToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+			this.changeProcessNameToKillToolStripMenuItem.Text = "C&hange process name to kill";
+			this.changeProcessNameToKillToolStripMenuItem.Click += new System.EventHandler(this.changeProcessNameToKillToolStripMenuItem_Click);
+			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -110,19 +135,19 @@
 			this.timer1.Interval = 5000;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
-			// changeProcessNameToKillToolStripMenuItem
+			// aboutToolStripMenuItem
 			// 
-			this.changeProcessNameToKillToolStripMenuItem.Name = "changeProcessNameToKillToolStripMenuItem";
-			this.changeProcessNameToKillToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-			this.changeProcessNameToKillToolStripMenuItem.Text = "C&hange process name to kill";
-			this.changeProcessNameToKillToolStripMenuItem.Click += new System.EventHandler(this.changeProcessNameToKillToolStripMenuItem_Click);
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+			this.aboutToolStripMenuItem.Text = "&About";
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
-			// toolStripSeparator3
+			// toolStripSeparator4
 			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(220, 6);
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(220, 6);
 			// 
-			// Form1
+			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -133,7 +158,7 @@
 			this.Controls.Add(this.button1);
 			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.Name = "Form1";
+			this.Name = "MainForm";
 			this.Opacity = 0.3D;
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
@@ -160,6 +185,9 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem changeProcessNameToKillToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem deleteAlbionCACHEToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 	}
 }
 

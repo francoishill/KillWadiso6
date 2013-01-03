@@ -12,13 +12,13 @@ using SharedClasses;
 
 namespace KillWadiso6
 {
-	public partial class Form1 : Form
+	public partial class MainForm : Form
 	{
 		private const string cDefaultProcessName = "Wadiso6";
 		private readonly string cPathToProcessName = SettingsInterop.GetFullFilePathInLocalAppdata("ProcessName.fjset", "KillWadiso6");
 		double origOpacity;
 
-		public Form1()
+		public MainForm()
 		{
 			InitializeComponent();
 			origOpacity = this.Opacity;
@@ -37,7 +37,7 @@ namespace KillWadiso6
 			{
 				if (!File.Exists(cPathToProcessName))
 					return cDefaultProcessName;
-				
+
 				string fileContents = File.ReadAllText(cPathToProcessName);
 				if (string.IsNullOrWhiteSpace(fileContents))
 					return cDefaultProcessName;
@@ -177,6 +177,73 @@ namespace KillWadiso6
 			}
 		}
 
+		private void deleteAlbionCACHEToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string dir1 = @"C:\Users\francois\AppData\Local\GLS\Albion";
+			string dir2 = @"C:\Users\francois\AppData\Local\GLS\adb";
+
+			if (!Directory.Exists(dir1) && !Directory.Exists(dir2))
+			{
+				UserMessages.ShowInfoMessage("Cannot delete cache, directories not found:"
+					+ Environment.NewLine + Environment.NewLine
+					+ string.Join(Environment.NewLine, dir1, dir2));
+				return;
+			}
+
+			string userConfirmMessage = "Are you sure you want to clear Albion CACHE by deleting the following ";
+			if (Directory.Exists(dir1) && Directory.Exists(dir2))
+				userConfirmMessage += "directories?"
+					+ Environment.NewLine + Environment.NewLine
+					+ string.Join(Environment.NewLine, dir1, dir2);
+			else if (Directory.Exists(dir1))
+				userConfirmMessage += "directory (other directory not found '" + dir2 + "')?"
+					+ Environment.NewLine + Environment.NewLine
+					+ dir1;
+			else// if (Directory.Exists(dir2))
+				userConfirmMessage += "directory (other directory not found '" + dir1 + "')?"
+					+ Environment.NewLine + Environment.NewLine
+					+ dir2;
+
+			if (UserMessages.Confirm(userConfirmMessage, "Clear Albion Cache", false, true))
+			{
+				string[] dirs = new string[] { dir1, dir2 };
+				Dictionary<string, string> errors = new Dictionary<string, string>();//dir, error
+				foreach (var d in dirs)
+				{
+					try
+					{
+						Directory.Delete(d, true);
+					}
+					catch (Exception exc)
+					{
+						errors.Add(d, "Error deleting dir '" + d + "': " + exc.Message);
+					}
+				}
+				if (errors.Count > 0)
+				{
+					if (errors.Count == dirs.Length)//All directories failed
+						UserMessages.ShowWarningMessage("Unable to clear Albion Cache, could not delete directories:"
+							+ Environment.NewLine + Environment.NewLine
+							+ string.Join(Environment.NewLine, errors.Values));
+					else
+						UserMessages.ShowWarningMessage("Unable to COMPLETELY clear Albion Cache, could not delete directories:"
+							+ Environment.NewLine + Environment.NewLine
+							+ string.Join(Environment.NewLine, errors.Values));
+
+					/*foreach (var errorDir in errors.Keys)
+						Process.Start("explorer", "/select,\"" + errorDir + "\"");*/
+					List<string> parentDirsOfErrors =
+						errors.Keys.Select(
+						dirwitherror => Path.GetDirectoryName(dirwitherror))//get parent dir of dir with error
+						.Distinct()
+						.ToList();
+
+					foreach (var parentDir in parentDirsOfErrors)
+						Process.Start("explorer", parentDir);
+				}
+			}
+		}
+
 		private void button1_MouseEnter(object sender, EventArgs e)
 		{
 			this.Opacity = 1;
@@ -199,6 +266,15 @@ namespace KillWadiso6
 		private void changeProcessNameToKillToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ChangeProcessNameTokill();
+		}
+
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			AboutWindow2.ShowAboutWindow(new System.Collections.ObjectModel.ObservableCollection<DisplayItem>()
+			{
+				new DisplayItem("Author", "Francois Hill"),
+				new DisplayItem("Icon(s) obtained from", null)
+			});
 		}
 	}
 }
