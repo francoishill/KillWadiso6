@@ -14,6 +14,7 @@ namespace KillWadiso6
 {
 	public partial class MainForm : Form
 	{
+		private const string cThisAppName = "KillWadiso6";
 		private const string cDefaultProcessName = "Wadiso6";
 		private readonly string cPathToProcessName = SettingsInterop.GetFullFilePathInLocalAppdata("ProcessName.fjset", "KillWadiso6");
 		double origOpacity;
@@ -241,6 +242,101 @@ namespace KillWadiso6
 					foreach (var parentDir in parentDirsOfErrors)
 						Process.Start("explorer", parentDir);
 				}
+			}
+		}
+
+		private readonly string[] cBinariesFileExtensions = new string[] { ".exe", ".dll", ".pdb" };
+		private readonly string[] cExpectedFileParentFoldernames = new string[] { "Debug", "Release" };
+		private void movebinariesOutOfDropboxSubfolderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string fullpathToSubfolderInDropbox = @"C:\Francois\Dev\VSprojects";
+
+			if (!UserMessages.Confirm(
+				string.Format("Confirm deletion of all binary files in directory (including subfolders) '{0}'?"
+					+ "{1}{1}Conditions to be met before deletion:"
+					+ "{1}File extensions must be one of ({2})"
+					+ "{1}Folder name the file is in must be one of ({3}).",
+					fullpathToSubfolderInDropbox,
+					Environment.NewLine,
+					string.Join(" , ", cBinariesFileExtensions),
+					string.Join(" , ", cExpectedFileParentFoldernames))))
+				return;
+
+			var allfiles = new string[0];
+			foreach (var ext in cBinariesFileExtensions)
+				allfiles = allfiles.Concat(Directory.GetFiles(fullpathToSubfolderInDropbox, "*" + ext, SearchOption.AllDirectories)).ToArray();
+
+			allfiles =
+				allfiles
+				//.Where(f => Path.GetFileNameWithoutExtension(f).Equals(f.Substring(fullpathToSubfolderInDropbox.Length).Trim('\\').Split('\\')[0], StringComparison.InvariantCultureIgnoreCase))
+				.Where(f => cExpectedFileParentFoldernames.Contains(Path.GetFileName(Path.GetDirectoryName(f)), StringComparer.InvariantCultureIgnoreCase))
+				.ToArray();
+
+			Func<long, double> bytesToMegabytesConverter = (bytes) => { return (double)bytes / (1024D * 1024D); };
+
+			Dictionary<string, string> errors = new Dictionary<string, string>();//message, possible stacktrace
+			Dictionary<string, string> successfullyMovedFiles = new Dictionary<string, string>();
+			long totalFilesMovedSize = 0;
+			try
+			{
+				string rootCopyToDir = @"C:\Francois\Other\_TempRemovedVsprojectsExeDllPdb";
+				if (!Directory.Exists(rootCopyToDir))
+					Directory.CreateDirectory(rootCopyToDir);
+				var uniqueDirs = allfiles.Select(f => Path.Combine(rootCopyToDir, Path.GetDirectoryName(f.Substring(fullpathToSubfolderInDropbox.Length).Trim('\\')))).Distinct();
+				foreach (var ud in uniqueDirs)
+					if (!Directory.Exists(ud))
+						Directory.CreateDirectory(ud);
+
+				foreach (var originalFilepath in allfiles)
+				{
+					string fileRelativePath = originalFilepath.Substring(fullpathToSubfolderInDropbox.Length).Trim('\\');
+					string destinationPath = Path.Combine(rootCopyToDir, fileRelativePath);
+					try
+					{
+						if (File.Exists(destinationPath))
+							File.Delete(destinationPath);//We just delete the old file??
+						File.Move(originalFilepath, destinationPath);
+						successfullyMovedFiles.Add(originalFilepath, destinationPath);
+						totalFilesMovedSize += new FileInfo(destinationPath).Length;
+					}
+					catch (Exception exc)
+					{
+						errors.Add(exc.Message, exc.StackTrace);
+					}
+				}
+			}
+			catch (Exception exc)
+			{
+				errors.Add(exc.Message, exc.StackTrace);
+			}
+
+			if (errors.Count == 0)
+			{
+				string successfullyMovedLogPath = Logging.LogSuccessToFile(
+					successfullyMovedFiles.Select(succKV => string.Format("Successfully moved file from '{0}' to '{1}'", succKV.Key, succKV.Value))
+					.ToList(),
+					Logging.ReportingFrequencies.Secondly,
+					cThisAppName,
+					"BinariesMoveSuccess");
+				UserMessages.ShowInfoMessage("Deletion completed, successfully moved all (" + successfullyMovedFiles.Count
+					+ ") relevant files , total size of " + bytesToMegabytesConverter(totalFilesMovedSize) + " MB."
+					+ Environment.NewLine + Environment.NewLine
+					+ "Click OK to open the log of moved files.");
+				Process.Start("notepad", "\"" + successfullyMovedLogPath + "\"");
+			}
+			else
+			{
+				string errorsLoggedPath = Logging.LogErrorToFile(
+					errors.Select(errKV => "Error: " + errKV.Key.Replace(Environment.NewLine, " | ")
+						+ (errKV.Value != null ? ". Stacktrace: " + errKV.Value.Replace(Environment.NewLine, " | ") : ""))
+						.ToList(),
+					Logging.ReportingFrequencies.Secondly,
+					cThisAppName,
+					"BinariesMoveErrors");
+				UserMessages.ShowErrorMessage("Error(s) occurred in moving the files, total (successfully) moved size was " + bytesToMegabytesConverter(totalFilesMovedSize) + " MB."
+					+ Environment.NewLine + Environment.NewLine
+					+ "Click OK to open the logged errors.");
+				Process.Start("notepad", "\"" + errorsLoggedPath + "\"");
 			}
 		}
 

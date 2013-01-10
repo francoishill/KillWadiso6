@@ -73,6 +73,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\Logging.cs">
+      <Link>Logging.cs</Link>
+    </Compile>
     <Compile Include="..\..\SharedClasses\AboutWindow2.xaml.cs">
       <Link>AboutWindow2.xaml.cs</Link>
       <DependentUpon>AboutWindow2.xaml</DependentUpon>

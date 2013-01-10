@@ -13,10 +13,10 @@ namespace KillWadiso6
 		[STAThread]
 		static void Main()
 		{
+			Application.SetCompatibleTextRenderingDefault(false);
 			SharedClasses.AutoUpdating.CheckForUpdates_ExceptionHandler();
 
 			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
 			//Application.Run(new Form1());
 			MainForm f1 = new MainForm();
 			f1.ShowDialog();
